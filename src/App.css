@@ -1,38 +1,156 @@
-.App {
-  text-align: center;
+body{
+  background-color: rgb(3, 57, 19);
+  height: 100vh;
+  margin: 0;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+main{
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  gap: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+main h1.welcome-text{
+  background-color: rgb(3, 57, 19);
+  color :aliceblue;
+  padding :5px;
+  font-size :40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align :center;
+  border-bottom: 1px solid rgb(3, 57, 19);
+}
+
+header.App-header {
+  background-color: aliceblue;
+  padding:10px;
+  font-size: 24px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align :center;
+  display: flex;
+  justify-content:space-between;
+  align-items:center;
+  
+}
+
+header .logo{
+  display: flex;
+  align-items: center;
+}
+
+img .logo-img{
+  height: 50px;
+}
+
+header nav.Header-navbar{
+  background-color: aliceblue;
+  color :rgb(0, 0, 0);
+  padding :10px;
+  font-size :18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align :center;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+header .profile{
+  display: flex;
+  align-items: center;
+}
+
+img .profile-pic{
+  height: 50px;
+  border-radius: 50%;
+}
+
+.scanner{
+  background-color: rgb(144, 142, 142);
+  padding :20px;
+  height: 300px;
+  width :250px;
+  margin :10px;
+  border: black 2px solid;
+  border-radius: 10px;
+  box-shadow: 5px 3px 15px #888888;
+  color: black;
+  font-size: 18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align :center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+div.buttons{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap:20px;
+
+}
+
+button.scan-button{
+  background-color:orangered;
   color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.App-link {
-  color: #61dafb;
+button.upload-img{
+  background-color: rgb(255, 255, 255);
+  color: orangered;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+a{
+  text-decoration-line: none;
+  text-align: center;
+  color: black;
+  font-size: 18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  justify-content:space-around;
+  align-items: center;
+}
+
+footer{
+  background-color: aliceblue;
+  padding: 10px;
+  font-size: 14px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+footer.footer-text{
+  color :rgb(0, 0, 0);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  bottom: 0;
+  position: relative;
+}
+
+footer navbar.Footer-navbar{
+  background-color: aliceblue;
+  color :rgb(0, 0, 0);
+  padding :10px;
+  font-size :18px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align :center;
+  display: flex;
+  justify-content:space-around;
+  align-items: center;
 }
