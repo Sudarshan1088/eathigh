@@ -1,7 +1,16 @@
-
+import React, { useState } from "react";
+import BarcodeScanner from "./BarcodeScanner";
 import './App.css';
 
-function App() {
+const App =() => {
+  const [barcode, setBarcode] = useState(null);
+
+  const handleDetected = (code) => {
+    console.log("Scanned barcode:", code); // <-- you can see it in browser console
+    setBarcode(code);
+  };
+
+
   return (
     <div className="App">
       <header
@@ -43,13 +52,21 @@ function App() {
           Welcome to EatHigh
         </h1>
 
-        <div
-          className="scanner"
-          style={{ display: 'flex', justifyContent: 'center', margin: '1rem 0' }}
+        <div className="scanner"
         >
-          <h2>QR Code Scanner Component Coming Soon!</h2>
+          <div style={{ textAlign: "center" }}>
+            
+            {!barcode ? (
+              <BarcodeScanner onDetected={handleDetected} />
+            ) : (
+              <div>
+                <h3>Scanned Code: {barcode}</h3>
+                {/* Next step: Fetch nutritional info based on the barcode */}
+              </div>
+            )}
+          </div>
         </div>
-
+            <h3>Scanned Code: {barcode}</h3>
         <div
           className="buttons"
           style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}

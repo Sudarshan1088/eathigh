@@ -68,23 +68,24 @@ img .profile-pic{
 }
 
 .scanner{
-  background-color: rgb(144, 142, 142);
+  /*background-color: rgb(144, 142, 142);
   padding :20px;
-  height: 300px;
-  width :250px;
+  height: 400px;
+  width :500px;
   margin :10px;
   border: black 2px solid;
   border-radius: 10px;
-  box-shadow: 5px 3px 15px #888888;
-  color: black;
-  font-size: 18px;
+  box-shadow: 5px 3px 15px #888888; */
+  color: rgb(240, 216, 216); 
+  font-size: 28px;
+  font-weight: bolder;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align :center;
-  display: flex;
+  /*display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-}
+  align-items: center; */
+}  
 
 div.buttons{
   display:flex;
@@ -131,7 +132,7 @@ footer{
   padding: 10px;
   font-size: 14px;
   text-align: center;
-  position: fixed;
+  position: relative;
   bottom: 0;
   width: 100%;
 }
