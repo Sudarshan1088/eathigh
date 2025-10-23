@@ -1,34 +1,136 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BarcodeScanner from "./BarcodeScanner";
 import './App.css';
 
-const App =() => {
+function rateProduct(product = {}) {
+  // Extract nutrients from API (per 100g)
+  const nutrients = product.nutriments || {};
+  const servingSize = product.serving_size || "100g"; // example: "50g" or "1 serving (200 ml)"
+  const servingMatch = servingSize.match(/(\d+\.?\d*)\s*(g|ml)/i);
+  const servingAmount = servingMatch ? parseFloat(servingMatch[1]) : 100;
+  const servingUnit = servingMatch ? servingMatch[2].toLowerCase() : "g";
+
+  // Adjust nutrients to per serving
+  const factor = servingAmount / 100; // scale factor
+  const calories = (nutrients["energy-kcal_100g"] || 0) * factor;
+  const fat = (nutrients.fat_100g || 0) * factor;
+  const saturatedFat = (nutrients["saturated-fat_100g"] || 0) * factor;
+  const sugar = (nutrients.sugars_100g || 0) * factor;
+  const protein = (nutrients.proteins_100g || 0) * factor;
+  const fiber = (nutrients.fiber_100g || 0) * factor;
+  const sodium = (nutrients.sodium_100g || 0) * factor;
+  const vitaminC = (nutrients["vitamin-c_100g"] || 0) * factor;
+  const iron = (nutrients.iron_100g || 0) * factor;
+  const transFat = (nutrients["trans-fat_100g"] || 0) * factor;
+
+  // Initialize score
+  let score = 10;
+
+  // 🔻 Penalties — unhealthy nutrients
+  if (calories > 300) score -= 2;                      // High-calorie serving
+  if (fat > 10) score -= 2;
+  if (saturatedFat > 3 && saturatedFat <= 6) score -= 2;
+  if (saturatedFat > 6) score -= 3;
+  if (transFat > 0) score -= 2;
+  if (sugar > 10 && sugar <= 20) score -= 3;
+  if (sugar > 20) score -= 4;
+  if (sodium > 0.4 && sodium <= 0.8) score -= 1;
+  if (sodium > 0.8) score -= 2;
+
+  // 🔺 Rewards — healthy nutrients
+  if (fiber > 3 && fiber <= 6) score += 2;
+  if (fiber > 6) score += 3;
+  if (protein > 5 && protein <= 10) score += 2;
+  if (protein > 10) score += 3;
+  if (vitaminC > 15 && vitaminC <= 30) score += 1;
+  if (vitaminC > 30) score += 2;
+  if (iron > 3 && iron <= 6) score += 1;
+  if (iron > 6) score += 2;
+
+  // ✅ Normalize final score between 0 and 10
+  if (score > 10) score = 10;
+  if (score < 0) score = 0;
+
+  // Return numeric score rounded to one decimal place
+  return Number(score.toFixed(1));
+}
+
+// 🎨 Rating bar UI component
+const RatingBar = ({ score }) => {
+  const percentage = (score / 10) * 100;
+  const color =
+    score >= 8 ? "#22c55e" : score >= 5 ? "#facc15" : "#ef4444"; // green/yellow/red
+
+  return (
+    <div style={{ width: "200px", margin: "10px auto" }}>
+      <div
+        style={{
+          background: "#e5e7eb",
+          borderRadius: "10px",
+          height: "15px",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            width: `${percentage}%`,
+            background: color,
+            height: "100%",
+            transition: "width 0.3s ease",
+          }}
+        />
+      </div>
+      <p style={{ marginTop: "5px", fontWeight: "bold" }}>
+        Health Score: {score}/10
+      </p>
+    </div>
+  );
+};
+
+const App = () => {
   const [barcode, setBarcode] = useState(null);
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleDetected = (code) => {
-    console.log("Scanned barcode:", code); // <-- you can see it in browser console
+    console.log("Scanned barcode:", code);
     setBarcode(code);
   };
 
+  useEffect(() => {
+    if (!barcode) return;
+
+    setLoading(true);
+    fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json`)
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(false);
+        if (data.status === 1) {
+          setProduct(data.product);
+        } else {
+          setProduct(null);
+          alert("Product not found in database.");
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.error("API error:", err);
+      });
+  }, [barcode]);
 
   return (
     <div className="App">
       <header
         className="App-header"
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '1rem'
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "1rem",
         }}
       >
         <div className="logo">
-          <img
-            src="logo.png"
-            className="logo-img"
-            alt="logo"
-            style={{ height: 60 }}
-          />
+          <img src="logo.png" className="logo-img" alt="logo" style={{ height: 60 }} />
         </div>
 
         <nav className="Header-navbar">
@@ -38,55 +140,126 @@ const App =() => {
         </nav>
 
         <div className="profile">
-          <img
-            src="profile.png"
-            className="profile-pic"
-            alt="profile"
-  
-          />
+          <img src="profile.png" className="profile-pic" alt="profile" />
         </div>
       </header>
 
       <main>
-        <h1 className="welcome-text" style={{ textAlign: 'center' }}>
+        <h1 className="welcome-text" style={{ textAlign: "center" }}>
           Welcome to EatHigh
         </h1>
 
-        <div className="scanner"
-        >
+        <div className="scanner">
           <div style={{ textAlign: "center" }}>
-            
             {!barcode ? (
               <BarcodeScanner onDetected={handleDetected} />
             ) : (
               <div>
                 <h3>Scanned Code: {barcode}</h3>
-                {/* Next step: Fetch nutritional info based on the barcode */}
+                <div style={{ marginTop: 12 }}>
+                  <button
+                    className="scan-button"
+                    onClick={() => {
+                      setBarcode(null);
+                      setProduct(null);
+                    }}
+                  >
+                    Scan Another
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="product-info" style={{ textAlign: "center", marginTop: "30px" }}
+          >
+            <h2 className="product-info-title">🥗 Nutritional Barcode Scanner</h2>
+
+            {loading && <p>Loading product info...</p>}
+
+            {product && (
+              <div
+                style={{
+                  marginTop: "20px",
+                  background: "#f8fafc",
+                  padding: "20px",
+                  borderRadius: "15px",
+                  boxShadow: "0 4px 10px rgba(226, 0, 0, 0.1)",
+                  maxWidth: "400px",
+                  marginInline: "auto",
+                }}
+              >
+                <img
+                  src={product.image_front_small_url}
+                  alt="product"
+                  style={{
+                    borderRadius: "10px",
+                    width: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+                <h3 style={{ marginTop: "15px" }}>
+                  {product.product_name || "Unknown Product"}
+                </h3>
+                <p>
+                  <b>Brand:</b> {product.brands || "N/A"}
+                </p>
+                <p>
+                  <b>Calories:</b>{" "}
+                  {product.nutriments?.["energy-kcal_100g"] ?? "?"} kcal/100g
+                </p>
+                <p>
+                  <b>Fat:</b> {product.nutriments?.fat_100g ?? "?"} g
+                </p>
+                <p>
+                  <b>Sugar:</b> {product.nutriments?.sugars_100g ?? "?"} g
+                </p>
+                <p>
+                  <b>Protein:</b> {product.nutriments?.proteins_100g ?? "?"} g
+                </p>
+                <p>
+                  <b>Fiber:</b> {product.nutriments?.fiber_100g ?? "?"} g
+                </p>
+                 <RatingBar score={rateProduct(product)} />
+                
+
+                <div style={{ marginTop: 12 }}>
+                  <button
+                    className="scan-button"
+                    onClick={() => {
+                      setBarcode(null);
+                      setProduct(null);
+                    }}
+                  >
+                    Scan Another
+                  </button>
+                </div>
               </div>
             )}
           </div>
         </div>
-            <h3>Scanned Code: {barcode}</h3>
-        <div
-          className="buttons"
-          style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}
-        >
-          <button className="scan-button">Scan QR Code</button>
-          <button className="upload-img">Upload Image</button>
+
+        <div style={{ textAlign: "center", marginTop: 16 }}>
+          <div
+            className="buttons"
+            style={{ display: "flex", gap: "1rem", justifyContent: "center" }}
+          >
+            <button className="upload-img">Upload Image</button>
+          </div>
         </div>
       </main>
 
       <footer
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '1rem'
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "1rem",
         }}
       >
         <nav
           className="Footer-navbar"
-          style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}
+          style={{ display: "flex", gap: "1rem", alignItems: "center" }}
         >
           <a href="#home">Home</a>
           <a href="#about">About</a>
