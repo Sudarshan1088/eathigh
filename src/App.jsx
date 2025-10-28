@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BarcodeScanner from "./BarcodeScanner";
+import logo from './Assets/logo.png';
+
 import './App.css';
 
 function rateProduct(product = {}) {
@@ -62,7 +64,7 @@ const RatingBar = ({ score }) => {
     score >= 8 ? "#22c55e" : score >= 5 ? "#facc15" : "#ef4444"; // green/yellow/red
 
   return (
-    <div style={{ width: "200px", margin: "10px auto" }}>
+    <div className="rating-bar">
       <div
         style={{
           background: "#e5e7eb",
@@ -120,19 +122,10 @@ const App = () => {
 
   return (
     <div className="App">
-      <header
-        className="App-header"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "1rem",
-        }}
-      >
-        <div className="logo">
-          <img src="logo.png" className="logo-img" alt="logo" style={{ height: 60 }} />
-        </div>
+      <header className="App-header">
 
+          <img src={logo} className="logo-img"  alt="logo"/>
+        
         <nav className="Header-navbar">
           <a href="#home">Home</a>
           <a href="#about">About</a>
@@ -140,63 +133,40 @@ const App = () => {
         </nav>
 
         <div className="profile">
-          <img src="profile.png" className="profile-pic" alt="profile" />
+          <img src="/Assets/profile.png" className="profile-pic" alt="profile" />
         </div>
       </header>
 
       <main>
-        <h1 className="welcome-text" style={{ textAlign: "center" }}>
-          Welcome to EatHigh
-        </h1>
+        <div className="container">
 
-        <div className="scanner">
-          <div style={{ textAlign: "center" }}>
-            {!barcode ? (
-              <BarcodeScanner onDetected={handleDetected} />
-            ) : (
-              <div>
-                <h3>Scanned Code: {barcode}</h3>
-                <div style={{ marginTop: 12 }}>
-                  <button
-                    className="scan-button"
-                    onClick={() => {
-                      setBarcode(null);
-                      setProduct(null);
-                    }}
-                  >
-                    Scan Another
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="product-info" style={{ textAlign: "center", marginTop: "30px" }}
-          >
-            <h2 className="product-info-title">🥗 Nutritional Barcode Scanner</h2>
+          <h1 className="welcome-text">Welcome to EatHigh</h1>
+          
+          <div className="product-info">
+            <h2 className="product-info-title">Nutritional Barcode Scanner</h2>
 
             {loading && <p>Loading product info...</p>}
 
             {product && (
-              <div
+              <div className="product-card"
                 style={{
                   marginTop: "20px",
                   background: "#f8fafc",
                   padding: "20px",
                   borderRadius: "15px",
                   boxShadow: "0 4px 10px rgba(226, 0, 0, 0.1)",
-                  maxWidth: "400px",
+                  maxWidth: "40vw",
                   marginInline: "auto",
                 }}
               >
                 <img
                   src={product.image_front_small_url}
                   alt="product"
-                  style={{
-                    borderRadius: "10px",
-                    width: "100%",
-                    objectFit: "cover",
-                  }}
+                  // style={{
+                  //   borderRadius: "10px",
+                  //   width: "100%",
+                  //   objectFit: "cover",
+                  // }}
                 />
                 <h3 style={{ marginTop: "15px" }}>
                   {product.product_name || "Unknown Product"}
@@ -204,26 +174,28 @@ const App = () => {
                 <p>
                   <b>Brand:</b> {product.brands || "N/A"}
                 </p>
+                <div className="nutrition">
                 <p>
-                  <b>Calories:</b>{" "}
-                  {product.nutriments?.["energy-kcal_100g"] ?? "?"} kcal/100g
-                </p>
-                <p>
-                  <b>Fat:</b> {product.nutriments?.fat_100g ?? "?"} g
-                </p>
-                <p>
-                  <b>Sugar:</b> {product.nutriments?.sugars_100g ?? "?"} g
-                </p>
-                <p>
-                  <b>Protein:</b> {product.nutriments?.proteins_100g ?? "?"} g
-                </p>
-                <p>
-                  <b>Fiber:</b> {product.nutriments?.fiber_100g ?? "?"} g
-                </p>
-                 <RatingBar score={rateProduct(product)} />
+                    <b>Calories:</b>{" "}
+                    {product.nutriments?.["energy-kcal_100g"] ?? "?"} kcal/100g
+                  </p>
+                  <p>
+                    <b>Fat:</b> {product.nutriments?.fat_100g ?? "?"} g
+                  </p>
+                  <p>
+                    <b>Sugar:</b> {product.nutriments?.sugars_100g ?? "?"} g
+                  </p>
+                  <p>
+                    <b>Protein:</b> {product.nutriments?.proteins_100g ?? "?"} g
+                  </p>
+                  <p>
+                    <b>Fiber:</b> {product.nutriments?.fiber_100g ?? "?"} g
+                  </p>
+                </div>
+                  <RatingBar score={rateProduct(product)} />
                 
 
-                <div style={{ marginTop: 12 }}>
+                <div>
                   <button
                     className="scan-button"
                     onClick={() => {
@@ -237,35 +209,37 @@ const App = () => {
               </div>
             )}
           </div>
-        </div>
 
-        <div style={{ textAlign: "center", marginTop: 16 }}>
-          <div
-            className="buttons"
-            style={{ display: "flex", gap: "1rem", justifyContent: "center" }}
-          >
-            <button className="upload-img">Upload Image</button>
+          <div className="scanner">
+            <div className="barcode-scanner">
+              {!barcode ? (
+                <BarcodeScanner onDetected={handleDetected} />
+              ) : (
+            <div>
+                
+              </div>
+              )}
+            </div>
+          </div>
+          <div className="instructions">
+            <h2 className="instructions-title">How to Use the Scanner</h2>
+            <ol className="instructions-list">
+              <li>Allow camera access when prompted.</li>
+              <li>Hold the barcode in front of your device's camera.</li>
+              <li>Ensure good lighting for accurate scanning.</li>
+              <li>Wait for the product information to load.</li>
+            </ol>
           </div>
         </div>
       </main>
 
-      <footer
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "1rem",
-        }}
-      >
-        <nav
-          className="Footer-navbar"
-          style={{ display: "flex", gap: "1rem", alignItems: "center" }}
-        >
+      <footer className="Footer">
+        <nav className="Footer-navbar">
           <a href="#home">Home</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
         </nav>
-        <p className="footer-text" style={{ margin: 0 }}>
+        <p className="footer-paragraph">
           &copy; 2023 EatHigh. All rights reserved.
         </p>
       </footer>

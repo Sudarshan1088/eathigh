@@ -50,17 +50,7 @@ const BarcodeScanner = ({ onDetected }) => {
   return (
     <div>
       <div id="video-container"
-        ref={videoRef}
-        // style={{
-        //   width: "100%",
-        //   height: "100%",
-        //   maxHeight: "290px",
-        //   maxWidth: "400px",
-        //   borderRadius: "10px",
-        //   overflow: "hidden",
-        // }}
-      />
-      <p style={{ textAlign: "center" }}>Point your camera at a barcode 📷</p>
+        ref={videoRef}/>
     </div>
   );
 };
