@@ -34,6 +34,6 @@
         max-width: 640px; /* Changed from 640px to fill container */
         margin: 0 auto;
         border: 5px solid orangered;
-        aspect-ratio: 4/3; /* Better aspect ratio for mobile devices */
+        aspect-ratio: 3/4; /* Better aspect ratio for mobile devices */
     }
 }
