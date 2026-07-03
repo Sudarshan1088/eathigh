@@ -4,9 +4,9 @@ EatHigh is a high-performance, responsive React application that allows users to
 
 ## Features
 
-- 📸 **Live Barcode Scanning**: Uses your device's camera to seamlessly detect and read barcodes using `Quagga2`.
-- 🔍 **Nutritional Analysis**: Integrates with the [OpenFoodFacts API](https://world.openfoodfacts.org/) to retrieve accurate and detailed product information (calories, fat, sugar, protein, etc.).
-- 📊 **Health Score Algorithm**: Automatically evaluates the scanned product's nutritional profile based on macros (penalizing high sugar, fat, sodium; rewarding protein, fiber, vitamins) and assigns an intuitive 0-10 rating.
+- **Live Barcode Scanning**: Uses your device's camera to seamlessly detect and read barcodes using `Quagga2`.
+- **Nutritional Analysis**: Integrates with the [OpenFoodFacts API](https://world.openfoodfacts.org/) to retrieve accurate and detailed product information (calories, fat, sugar, protein, etc.).
+- **Health Score Algorithm**: Automatically evaluates the scanned product's nutritional profile based on macros (penalizing high sugar, fat, sodium; rewarding protein, fiber, vitamins) and assigns an intuitive 0-10 rating.
 - 📱 **Responsive Design**: Built to work seamlessly on both desktop and mobile devices.
 
 ## Tech Stack
