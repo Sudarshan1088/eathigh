@@ -1,0 +1,10 @@
+/* ── Auth Pages ── */
+.auth-page{flex:1;display:flex;align-items:center;justify-content:center;padding:var(--space-2xl) var(--space-md)}
+.auth-card{width:100%;max-width:420px;background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-2xl)}
+.auth-card__header{text-align:center;margin-bottom:var(--space-xl)}
+.auth-card__title{font-family:var(--font-heading);font-size:1.75rem;margin-bottom:var(--space-xs)}
+.auth-card__subtitle{font-size:.875rem;color:var(--color-text-secondary)}
+.auth-form{display:flex;flex-direction:column;gap:var(--space-md);margin-bottom:var(--space-lg)}
+.auth-form__error{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:var(--color-danger);padding:var(--space-sm) var(--space-md);border-radius:var(--radius-sm);font-size:.875rem;text-align:center}
+.auth-card__footer{text-align:center;font-size:.875rem;color:var(--color-text-muted)}
+.auth-card__link{color:var(--color-primary);font-weight:600}
