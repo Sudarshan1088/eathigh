@@ -14,14 +14,14 @@ eathigh/
 ## Features
 
 
-- **Live Barcode Scanning** — Camera-based barcode detection via `Quagga2`.
-- **AI-Powered Analysis** — Gemini 2.0 Flash generates personalized health scores and explains *why* a product scored the way it did.
-- **MongoDB Caching** — Scanned products are cached for 7 days, drastically improving subsequent load times.
-- **User Authentication** — JWT-based auth with bcrypt password hashing.
-- **Dietary Personalization** — Users set dietary goals (High Protein, Keto, Low Sodium, etc.) and the AI adjusts its analysis accordingly.
-- **Scan History** — Authenticated users get a paginated history of all their scans.
-- **Rate Limiting** — Endpoint-specific rate limiting to prevent abuse.
-- **Strict TypeScript** — End-to-end type safety with shared types across frontend and backend.
+- **Live Barcode Scanning**: Camera-based barcode detection via `Quagga2`.
+- **AI-Powered Analysis**: Gemini 2.0 Flash generates personalized health scores and explains *why* a product scored the way it did.
+- **MongoDB Caching**: Scanned products are cached for 7 days, drastically improving subsequent load times.
+- **User Authentication**: JWT-based auth with bcrypt password hashing.
+- **Dietary Personalization**: Users set dietary goals (High Protein, Keto, Low Sodium, etc.) and the AI adjusts its analysis accordingly.
+- **Scan History**: Authenticated users get a paginated history of all their scans.
+- **Rate Limiting**: Endpoint-specific rate limiting to prevent abuse.
+- **Strict TypeScript**: End-to-end type safety with shared types across frontend and backend.
 - **Responsive Design**: Built to work seamlessly on both desktop and mobile devices.
 
 
