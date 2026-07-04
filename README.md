@@ -1,63 +1,98 @@
-# EatHigh - Nutritional Barcode Scanner
+# EatHigh — AI-Powered Nutritional Barcode Scanner
 
-EatHigh is a high-performance, responsive React application that allows users to scan food product barcodes using their device's camera. It fetches real-time nutritional data and calculates a comprehensive Health Score to help users make informed dietary choices.
+A full-stack MERN application that scans food product barcodes, fetches real-time nutritional data, and uses **Gemini AI** to generate personalized health scores and conversational dietary analysis.
+
+## Architecture
+
+```
+eathigh/
+├── packages/shared/     # Shared TypeScript types & constants
+├── apps/api/            # Express + MongoDB backend
+└── apps/web/            # Vite + React + TypeScript frontend
+```
 
 ## Features
 
-- **Live Barcode Scanning**: Uses your device's camera to seamlessly detect and read barcodes using `Quagga2`.
-- **Nutritional Analysis**: Integrates with the [OpenFoodFacts API](https://world.openfoodfacts.org/) to retrieve accurate and detailed product information (calories, fat, sugar, protein, etc.).
-- **Health Score Algorithm**: Automatically evaluates the scanned product's nutritional profile based on macros (penalizing high sugar, fat, sodium; rewarding protein, fiber, vitamins) and assigns an intuitive 0-10 rating.
-- 📱 **Responsive Design**: Built to work seamlessly on both desktop and mobile devices.
+
+**Live Barcode Scanning** — Camera-based barcode detection via `Quagga2`.
+**AI-Powered Analysis** — Gemini 2.0 Flash generates personalized health scores and explains *why* a product scored the way it did
+**MongoDB Caching** — Scanned products are cached for 7 days, drastically improving subsequent load times
+**User Authentication** — JWT-based auth with bcrypt password hashing
+**Dietary Personalization** — Users set dietary goals (High Protein, Keto, Low Sodium, etc.) and the AI adjusts its analysis accordingly
+**Scan History** — Authenticated users get a paginated history of all their scans
+**Rate Limiting** — Endpoint-specific rate limiting to prevent abuse
+**Strict TypeScript** — End-to-end type safety with shared types across frontend and backend
+**Responsive Design**: Built to work seamlessly on both desktop and mobile devices.
+
 
 ## Tech Stack
 
-- **Frontend Framework**: React.js
-- **Barcode Decoding**: [@ericblade/quagga2](https://github.com/ericblade/quagga2)
-- **Styling**: Vanilla CSS
-- **Data Source**: OpenFoodFacts API
+| Layer     | Technology                                           |
+| --------- | ---------------------------------------------------- |
+| Frontend  | React 19, Vite, TypeScript, React Router             |
+| Backend   | Express, TypeScript, Mongoose                        |
+| Database  | MongoDB (Atlas or local)                             |
+| AI        | Google Gemini 2.0 Flash (`@google/generative-ai`)    |
+| Auth      | JWT + bcrypt                                         |
+| Barcode   | @ericblade/quagga2                                   |
+| Data      | OpenFoodFacts API                                    |
+| Validation| Zod                                                  |
+
 
 ## Getting Started
 
-Follow these instructions to get a copy of the project up and running on your local machine for development and testing purposes.
+To get a local copy of the EatHigh project up and running on your machine for development and testing, follow the instructions below.
 
 ### Prerequisites
 
-Ensure you have Node.js and npm installed on your machine.
-- [Node.js](https://nodejs.org/) (v14 or higher recommended)
+- Node.js v18+
+- MongoDB (local or [Atlas](https://www.mongodb.com/atlas))
+- A [Google Gemini API key](https://aistudio.google.com/)
 
-### Installation
+### Setup
 
-1. Clone the repository or navigate to the project directory:
+1. Clone the repository:
    ```bash
+   git clone https://github.com/Sudarshan1088/eathigh.git
    cd eathigh
    ```
 
-2. Install the required dependencies:
+2. Install all dependencies (npm workspaces):
    ```bash
    npm install
    ```
 
-3. Start the development server:
+3. Configure environment variables:
    ```bash
-   npm start
+   cp .env.example apps/api/.env
+   ```
+   Edit `apps/api/.env` and fill in your values:
+   ```
+   MONGODB_URI=mongodb+srv://...
+   JWT_SECRET=a-long-random-string
+   GEMINI_API_KEY=your-key-from-aistudio
    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+4. Start both servers:
+   ```bash
+   npm run dev
+   ```
+   - Frontend → http://localhost:5173
+   - Backend  → http://localhost:5000
 
-## How to Use
+## API Endpoints
 
-1. Launch the application and allow the browser to access your device's camera when prompted.
-2. Hold a product's barcode steadily in front of the camera. Ensure there is good lighting for accurate and fast scanning.
-3. Wait a moment for the scanner to detect the barcode and fetch the product information.
-4. Review the product details, nutritional facts, and the generated Health Score.
-5. Click **Scan Another** to evaluate a different product.
-
-## Project Structure
-
-- `src/App.jsx`: Main application component, handles state, API fetching, and the Health Score algorithm.
-- `src/BarcodeScanner.jsx`: Wrapper component for Quagga2 initialization, camera setup, and barcode detection logic.
-- `src/App.css` & `src/BarcodeScanner.css`: Custom styling for the application UI.
+| Method | Endpoint              | Auth     | Description                      |
+| ------ | --------------------- | -------- | -------------------------------- |
+| POST   | `/api/auth/register`  | Public   | Create a new account             |
+| POST   | `/api/auth/login`     | Public   | Login and receive JWT            |
+| GET    | `/api/auth/me`        | Required | Get current user profile         |
+| POST   | `/api/scan/:barcode`  | Optional | Scan a barcode, get AI analysis  |
+| GET    | `/api/user/profile`   | Required | Get full user profile            |
+| PUT    | `/api/user/profile`   | Required | Update name & dietary goals      |
+| GET    | `/api/user/history`   | Required | Paginated scan history           |
+| GET    | `/api/health`         | Public   | Server health check              |
 
 ## License
 
-&copy; 2023 EatHigh. All rights reserved.
+&copy; 2026 Sudarshan Dandgawal. Open source under the MIT License.
