@@ -40,18 +40,19 @@ app.use((_req, res) => {
 });
 
 // ── Start Server ───────────────────────────────────────────────────
-async function start() {
-  await connectDB();
+// ── Start Server ───────────────────────────────────────────────────
+// Connect to DB immediately for Vercel cold starts
+connectDB().catch(console.error);
+
+if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => {
     console.log(`🚀 EatHigh API running on http://localhost:${PORT}`);
     console.log(`   CORS origin: ${CLIENT_URL}`);
   });
 }
 
-start().catch((err) => {
-  console.error("Failed to start server:", err);
-  process.exit(1);
-});
+// Export the app for Vercel Serverless
+export default app;
 
 // Graceful shutdown
 process.on("SIGINT", () => {

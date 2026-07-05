@@ -1,5 +1,15 @@
 {
   "buildCommand": "npm -w @eathigh/web run build",
   "outputDirectory": "apps/web/build",
-  "framework": "vite"
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/apps/api/src/index.ts"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }
