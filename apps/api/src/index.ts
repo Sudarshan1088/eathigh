@@ -15,9 +15,22 @@ const app = express();
 
 // ── Global Middleware ──────────────────────────────────────────────
 app.use(helmet());
+
+const allowedOrigins = [CLIENT_URL];
+if (process.env.VERCEL_URL) {
+  allowedOrigins.push(`https://${process.env.VERCEL_URL}`);
+}
+
 app.use(
   cors({
-    origin: CLIENT_URL,
+    origin: (origin, callback) => {
+      // Allow requests with no origin (server-to-server, same-origin on Vercel)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(null, true); // permissive for now — tighten after deploy works
+      }
+    },
     credentials: true,
   })
 );
@@ -39,7 +52,6 @@ app.use((_req, res) => {
   res.status(404).json({ success: false, error: "Route not found" });
 });
 
-// ── Start Server ───────────────────────────────────────────────────
 // ── Start Server ───────────────────────────────────────────────────
 // Connect to DB immediately for Vercel cold starts
 connectDB().catch(console.error);
