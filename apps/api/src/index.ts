@@ -1,7 +1,4 @@
-// Only load .env file in local development — Vercel injects env vars automatically
-if (process.env.NODE_ENV !== "production") {
-  await import("dotenv/config");
-}
+import "dotenv/config";
 
 import express from "express";
 import cors from "cors";
