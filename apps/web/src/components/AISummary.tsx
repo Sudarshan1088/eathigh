@@ -1,5 +1,3 @@
-import "../styles/product.css";
-
 interface AISummaryProps {
   summary: string;
   cached: boolean;
@@ -7,13 +5,19 @@ interface AISummaryProps {
 
 export default function AISummary({ summary, cached }: AISummaryProps) {
   return (
-    <div className="ai-summary">
-      <div className="ai-summary__header">
-        <span className="ai-summary__icon">✨</span>
-        <h4 className="ai-summary__title">AI Analysis</h4>
-        {cached && <span className="ai-summary__badge">Cached</span>}
+    <div className="bg-neutral-950/50 border border-neutral-800 rounded-xl p-4">
+      <div className="flex items-center gap-2 mb-2">
+        <span className="text-lg">✨</span>
+        <h4 className="font-heading text-sm font-semibold text-white">AI Analysis</h4>
+        {cached && (
+          <span className="ml-auto text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-sky-500/10 text-sky-400">
+            Cached
+          </span>
+        )}
       </div>
-      <p className="ai-summary__text">{summary}</p>
+      <p className="text-sm text-neutral-400 leading-relaxed">
+        {summary}
+      </p>
     </div>
   );
 }
