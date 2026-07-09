@@ -38,6 +38,16 @@ app.use(
 app.use(express.json({ limit: "1mb" }));
 app.use(generalLimiter);
 
+// ── Ensure DB Connection for Serverless ────────────────────────────
+app.use(async (_req, _res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
+
 // ── Health Check ───────────────────────────────────────────────────
 app.get("/api/health", (_req, res) => {
   res.json({ success: true, data: { status: "ok", timestamp: new Date().toISOString() } });
@@ -60,7 +70,7 @@ app.use((err: Error, _req: express.Request, res: express.Response, _next: expres
 });
 
 // ── Start Server ───────────────────────────────────────────────────
-// Connect to DB immediately for Vercel cold starts
+// Connect to DB immediately for Vercel cold starts (non-blocking)
 connectDB().catch(console.error);
 
 if (process.env.NODE_ENV !== "production") {
