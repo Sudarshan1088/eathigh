@@ -18,6 +18,9 @@ router.use(requireAuth);
 // ── Validation Schemas ─────────────────────────────────────────────
 const updateProfileSchema = z.object({
   name: z.string().min(1).max(100).optional(),
+  gender: z.enum(['male', 'female', 'other']).optional(),
+  weight: z.number().positive().optional(),
+  height: z.number().positive().optional(),
   dietaryGoals: z
     .array(
       z.object({
@@ -47,6 +50,10 @@ router.get("/profile", async (req, res): Promise<void> => {
       id: user._id.toString(),
       email: user.email,
       name: user.name,
+      gender: user.gender,
+      weight: user.weight,
+      height: user.height,
+      dietaryGoal: user.dietaryGoal,
       dietaryGoals: user.dietaryGoals,
       createdAt: user.createdAt.toISOString(),
       updatedAt: user.updatedAt.toISOString(),
@@ -68,8 +75,11 @@ router.put(
       const { userId } = (req as AuthenticatedRequest).user!;
       const updates: Record<string, unknown> = {};
 
-      if (req.body.name) updates.name = req.body.name;
-      if (req.body.dietaryGoals) updates.dietaryGoals = req.body.dietaryGoals;
+      if (req.body.name !== undefined) updates.name = req.body.name;
+      if (req.body.gender !== undefined) updates.gender = req.body.gender;
+      if (req.body.weight !== undefined) updates.weight = req.body.weight;
+      if (req.body.height !== undefined) updates.height = req.body.height;
+      if (req.body.dietaryGoals !== undefined) updates.dietaryGoals = req.body.dietaryGoals;
 
       const user = await User.findByIdAndUpdate(userId, updates, { new: true });
 
@@ -82,6 +92,10 @@ router.put(
         id: user._id.toString(),
         email: user.email,
         name: user.name,
+        gender: user.gender,
+        weight: user.weight,
+        height: user.height,
+        dietaryGoal: user.dietaryGoal,
         dietaryGoals: user.dietaryGoals,
         createdAt: user.createdAt.toISOString(),
         updatedAt: user.updatedAt.toISOString(),

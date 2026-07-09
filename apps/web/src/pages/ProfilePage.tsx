@@ -9,6 +9,9 @@ export default function ProfilePage() {
   const { user, refreshUser, logout } = useAuth();
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [gender, setGender] = useState<'male' | 'female' | 'other'>('male');
+  const [weight, setWeight] = useState(0);
+  const [height, setHeight] = useState(0);
   const [goals, setGoals] = useState<DietaryGoal[]>([]);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -19,6 +22,9 @@ export default function ProfilePage() {
       return;
     }
     setName(user.name);
+    setGender(user.gender || 'male');
+    setWeight(user.weight || 0);
+    setHeight(user.height || 0);
     setGoals(user.dietaryGoals);
   }, [user, navigate]);
 
@@ -38,7 +44,7 @@ export default function ProfilePage() {
     setSaving(true);
     setMessage(null);
 
-    const res = await updateProfile({ name, dietaryGoals: goals });
+    const res = await updateProfile({ name, dietaryGoals: goals, gender, weight, height });
 
     if (res.success) {
       setMessage("Profile updated successfully!");
@@ -76,6 +82,39 @@ export default function ProfilePage() {
                 className="w-full px-4 py-3 bg-neutral-950/50 border border-neutral-800 rounded-xl text-white focus:outline-none focus:border-primary-DEFAULT focus:ring-1 focus:ring-primary-DEFAULT transition-all"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="profile-gender" className="text-sm font-medium text-neutral-400">Gender</label>
+              <select
+                id="profile-gender"
+                className="w-full px-4 py-3 bg-neutral-950/50 border border-neutral-800 rounded-xl text-white focus:outline-none focus:border-primary-DEFAULT focus:ring-1 focus:ring-primary-DEFAULT transition-all"
+                value={gender}
+                onChange={(e) => setGender(e.target.value as 'male' | 'female' | 'other')}
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="profile-weight" className="text-sm font-medium text-neutral-400">Weight (kg)</label>
+              <input
+                id="profile-weight"
+                type="number"
+                className="w-full px-4 py-3 bg-neutral-950/50 border border-neutral-800 rounded-xl text-white focus:outline-none focus:border-primary-DEFAULT focus:ring-1 focus:ring-primary-DEFAULT transition-all"
+                value={weight}
+                onChange={(e) => setWeight(Number(e.target.value))}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="profile-height" className="text-sm font-medium text-neutral-400">Height (cm)</label>
+              <input
+                id="profile-height"
+                type="number"
+                className="w-full px-4 py-3 bg-neutral-950/50 border border-neutral-800 rounded-xl text-white focus:outline-none focus:border-primary-DEFAULT focus:ring-1 focus:ring-primary-DEFAULT transition-all"
+                value={height}
+                onChange={(e) => setHeight(Number(e.target.value))}
               />
             </div>
             <div className="flex flex-col gap-2">
