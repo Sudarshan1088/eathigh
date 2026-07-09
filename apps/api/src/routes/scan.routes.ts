@@ -2,7 +2,7 @@ import { Router } from "express";
 import { CachedProduct } from "../models/CachedProduct.js";
 import { User } from "../models/User.js";
 import { fetchProductFromOFF } from "../utils/fetchProduct.js";
-import { analyzeNutrition } from "../config/gemini.js";
+import { analyzeNutrition } from "../services/aiService.js";
 import { optionalAuth, type AuthenticatedRequest } from "../middleware/auth.js";
 import { scanLimiter } from "../middleware/rateLimiter.js";
 import type { ApiResponse, ScanResult, Product } from "@eathigh/shared";
@@ -70,16 +70,16 @@ router.post(
       }
 
       // ── 3. AI Analysis ───────────────────────────────────────────
-      // If user is authenticated, pass their dietary goals for personalization
+      // If user is authenticated, pass their full biometric profile for personalization
       const authReq = req as AuthenticatedRequest;
-      let userGoals;
+      let user = null;
 
       if (authReq.user) {
-        const user = await User.findById(authReq.user.userId);
-        userGoals = user?.dietaryGoals;
+        // As requested: Fetch fresh user biometrics from Mongoose
+        user = await User.findById(authReq.user.userId);
       }
 
-      const aiResult = await analyzeNutrition(product, userGoals);
+      const aiResult = await analyzeNutrition(product, user);
 
       // ── 4. Cache the result ──────────────────────────────────────
       await CachedProduct.create({

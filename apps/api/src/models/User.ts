@@ -6,6 +6,10 @@ export interface IUser extends Document {
   email: string;
   password: string;
   name: string;
+  gender: 'male' | 'female' | 'other';
+  weight: number;
+  height: number;
+  dietaryGoal: string;
   dietaryGoals: DietaryGoal[];
   scanHistory: {
     barcode: string;
@@ -61,6 +65,24 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
       trim: true,
+    },
+    gender: {
+      type: String,
+      enum: ['male', 'female', 'other'],
+      required: true,
+    },
+    weight: {
+      type: Number,
+      required: true,
+    },
+    height: {
+      type: Number,
+      required: true,
+    },
+    dietaryGoal: {
+      type: String,
+      default: 'general',
+      required: true,
     },
     dietaryGoals: {
       type: [dietaryGoalSchema],

@@ -15,7 +15,11 @@ export interface UserProfile {
   id: string;
   email: string;
   name: string;
-  dietaryGoals: DietaryGoal[];
+  gender: 'male' | 'female' | 'other';
+  weight: number;
+  height: number;
+  dietaryGoal: string;
+  dietaryGoals: DietaryGoal[]; // Kept for legacy/array structures
   createdAt: string;
   updatedAt: string;
 }
@@ -34,9 +38,13 @@ export interface AuthResponse {
 
 /** Body for registration requests. */
 export interface RegisterBody {
-  name: string;
+  name?: string; // Optional since the prompt wizard doesn't collect name explicitly
   email: string;
   password: string;
+  gender: 'male' | 'female' | 'other';
+  weight: number;
+  height: number;
+  dietaryGoal: string;
 }
 
 /** Body for login requests. */
@@ -49,6 +57,9 @@ export interface LoginBody {
 export interface UpdateProfileBody {
   name?: string;
   dietaryGoals?: DietaryGoal[];
+  gender?: 'male' | 'female' | 'other';
+  weight?: number;
+  height?: number;
 }
 
 /** Preset dietary goals that users can pick from. */

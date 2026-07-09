@@ -11,10 +11,18 @@ import type { ApiResponse, AuthResponse, UserProfile } from "@eathigh/shared";
 const router = Router();
 
 // ── Validation Schemas ─────────────────────────────────────────────
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&^#_.])[A-Za-z\d@$!%*?&^#_.]{8,}$/;
+
 const registerSchema = z.object({
-  name: z.string().min(1, "Name is required").max(100),
+  name: z.string().min(1, "Name is required").max(100).optional().default("User"),
   email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string()
+    .min(8, "Password must be at least 8 characters")
+    .regex(passwordRegex, "Must contain at least 1 uppercase, 1 lowercase, 1 number, and 1 special character"),
+  gender: z.enum(['male', 'female', 'other']),
+  weight: z.number().min(20, "Weight must be at least 20 kg").max(300, "Weight exceeds valid range"),
+  height: z.number().min(50, "Height must be at least 50 cm").max(250, "Height exceeds valid range"),
+  dietaryGoal: z.enum(['general', 'high_protein', 'keto', 'low_sodium', 'diabetic']).default('general')
 });
 
 const loginSchema = z.object({
@@ -28,6 +36,10 @@ function toUserProfile(user: InstanceType<typeof User>): UserProfile {
     id: user._id.toString(),
     email: user.email,
     name: user.name,
+    gender: user.gender,
+    weight: user.weight,
+    height: user.height,
+    dietaryGoal: user.dietaryGoal,
     dietaryGoals: user.dietaryGoals,
     createdAt: user.createdAt.toISOString(),
     updatedAt: user.updatedAt.toISOString(),
@@ -41,7 +53,7 @@ router.post(
   validateBody(registerSchema),
   async (req, res): Promise<void> => {
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password, gender, weight, height, dietaryGoal } = req.body;
 
       const existing = await User.findOne({ email });
       if (existing) {
@@ -59,6 +71,10 @@ router.post(
         name,
         email,
         password: hashedPassword,
+        gender,
+        weight,
+        height,
+        dietaryGoal
       });
 
       const token = generateToken({ userId: user._id.toString(), email: user.email });
