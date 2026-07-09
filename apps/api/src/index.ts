@@ -75,7 +75,7 @@ connectDB().catch(console.error);
 
 if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => {
-    console.log(`🚀 EatHigh API running on http://localhost:${PORT}`);
+    console.log(`EatHigh API running on http://localhost:${PORT}`);
     console.log(`   CORS origin: ${CLIENT_URL}`);
   });
 }

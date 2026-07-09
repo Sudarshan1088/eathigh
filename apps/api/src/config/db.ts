@@ -19,10 +19,10 @@ export async function connectDB(): Promise<typeof mongoose | void> {
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongooseInstance) => {
-      console.log("✅ MongoDB connected successfully");
+      console.log("MongoDB connected successfully");
       return mongooseInstance;
     }).catch(error => {
-      console.error("❌ MongoDB connection error:", error);
+      console.error("MongoDB connection error:", error);
       cached.promise = null;
       throw error;
     });
@@ -41,7 +41,7 @@ export async function connectDB(): Promise<typeof mongoose | void> {
     });
 
     mongoose.connection.on("disconnected", () => {
-      console.warn("⚠️  MongoDB disconnected");
+      console.warn("MongoDB disconnected");
       cached.conn = null;
       cached.promise = null;
     });
