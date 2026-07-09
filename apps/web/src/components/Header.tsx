@@ -11,24 +11,24 @@ export default function Header() {
   };
 
   return (
-    <header className="hidden md:flex sticky top-0 z-50 items-center justify-between px-8 py-4 bg-neutral-950/80 backdrop-blur-md border-b border-neutral-800">
+    <header className="hidden md:flex sticky top-0 z-50 items-center justify-between px-8 py-4 bg-earth-light/80 backdrop-blur-md border-b border-earth-olive-dark/20">
       <Link to="/" className="flex items-center gap-2 group">
         <span className="text-2xl transition-transform group-hover:scale-110">🥗</span>
-        <span className="font-heading text-2xl font-bold bg-gradient-to-br from-primary-DEFAULT to-emerald-300 bg-clip-text text-transparent">
+        <span className="font-heading text-2xl font-bold bg-gradient-to-br from-earth-olive to-earth-olive-dark bg-clip-text text-transparent">
           EatHigh
         </span>
       </Link>
 
       <nav className="flex items-center gap-8">
-        <Link to="/" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">
+        <Link to="/" className="text-sm font-medium text-earth-olive-dark/70 hover:text-earth-olive-dark transition-colors">
           Home
         </Link>
         {user && (
           <>
-            <Link to="/history" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">
+            <Link to="/history" className="text-sm font-medium text-earth-olive-dark/70 hover:text-earth-olive-dark transition-colors">
               History
             </Link>
-            <Link to="/profile" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">
+            <Link to="/profile" className="text-sm font-medium text-earth-olive-dark/70 hover:text-earth-olive-dark transition-colors">
               Profile
             </Link>
           </>
@@ -38,9 +38,9 @@ export default function Header() {
       <div className="flex items-center gap-4">
         {user ? (
           <div className="flex items-center gap-6">
-            <span className="text-sm font-medium text-primary-DEFAULT">{user.name}</span>
+            <span className="text-sm font-medium text-earth-olive-dark">{user.name}</span>
             <button 
-              className="px-4 py-2 text-sm font-medium text-neutral-400 border border-neutral-800 rounded-lg hover:bg-neutral-900 hover:text-white transition-all"
+              className="px-4 py-2 text-sm font-medium text-earth-olive-dark border border-earth-olive-dark rounded-lg hover:bg-earth-olive-dark hover:text-earth-light transition-all"
               onClick={handleLogout}
             >
               Logout
@@ -50,13 +50,13 @@ export default function Header() {
           <div className="flex items-center gap-3">
             <Link 
               to="/login" 
-              className="px-4 py-2 text-sm font-medium text-neutral-400 border border-neutral-800 rounded-lg hover:bg-neutral-900 hover:text-white transition-all"
+              className="px-4 py-2 text-sm font-medium text-earth-olive-dark border border-earth-olive-dark rounded-lg hover:bg-earth-olive-dark hover:text-earth-light transition-all"
             >
               Login
             </Link>
             <Link 
               to="/register" 
-              className="px-4 py-2 text-sm font-semibold text-neutral-950 bg-primary-DEFAULT rounded-lg hover:bg-primary-hover shadow-[0_0_20px_rgba(52,211,153,0.2)] hover:shadow-[0_0_25px_rgba(52,211,153,0.4)] hover:scale-105 transition-all"
+              className="px-4 py-2 text-sm font-semibold text-earth-light bg-earth-olive rounded-lg hover:bg-earth-olive-light shadow-[0_0_20px_rgba(106,153,78,0.2)] hover:shadow-[0_0_25px_rgba(106,153,78,0.4)] hover:scale-105 transition-all"
             >
               Sign Up
             </Link>

@@ -10,7 +10,7 @@ import HistoryPage from "./pages/HistoryPage";
 
 export default function App() {
   return (
-    <div className="min-h-dvh flex flex-col bg-neutral-950 text-neutral-50 font-body relative pb-16 md:pb-0">
+    <div className="min-h-dvh flex flex-col bg-earth-light text-earth-olive-dark font-body relative pb-16 md:pb-0">
       <Header />
       
       <main className="flex-1 flex flex-col w-full max-w-7xl mx-auto">

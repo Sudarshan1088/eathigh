@@ -8,6 +8,15 @@
   --font-heading: "Space Grotesk", sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --animate-scanner-laser: laser 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+  --animate-fade-in-up: fade-in-up 0.5s ease-out forwards;
+  --animate-scale-in: scale-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+
+  --color-earth-light: #F2E8CF;
+  --color-earth-olive-light: #A7C957;
+  --color-earth-olive: #6A994E;
+  --color-earth-olive-dark: #386641;
+  --color-earth-crimson: #BC4749;
 }
 
 @keyframes laser {
@@ -23,6 +32,33 @@
   }
   90% {
     opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
