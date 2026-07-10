@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   return (
     <footer className="w-full bg-neutral-950/80 backdrop-blur-md border-t border-neutral-800 mt-auto hidden md:block">
@@ -11,14 +13,14 @@ export default function Footer() {
           </p>
         </div>
         <nav className="flex gap-6">
-          <a href="#home" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">Home</a>
-          <a href="#about" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">About</a>
-          <a href="#contact" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">Contact</a>
+          <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">Home</Link>
+          <a href="/#about" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">About</a>
+          <a href="/#contact" className="text-sm font-medium text-neutral-400 hover:text-white transition-colors">Contact</a>
         </nav>
       </div>
       <div className="border-t border-neutral-800 py-6 text-center">
         <p className="text-xs text-neutral-500">
-          &copy; 2026 Sudarshan Dandgawal. Open source under the MIT License.
+          &copy; 2026 <a href="https://portfolio-sudarshan-dandgawal.vercel.app/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline decoration-neutral-700 underline-offset-2">Sudarshan Dandgawal</a>. Open source under the MIT License.
         </p>
       </div>
     </footer>

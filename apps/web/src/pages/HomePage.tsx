@@ -131,6 +131,27 @@ export default function HomePage() {
 
         </section>
       )}
+
+      {/* About Section */}
+      <section id="about" className="w-full max-w-5xl mx-auto mt-24 md:mt-32 mb-16 text-center animate-fade-in-up scroll-mt-24">
+        <h2 className="font-heading text-3xl font-bold text-earth-olive-dark mb-6">About EatHigh</h2>
+        <p className="text-lg text-earth-olive-dark/70 max-w-3xl mx-auto leading-relaxed">
+          EatHigh is an AI-driven nutritional telemetry platform designed to help you make smarter dietary choices. By leveraging advanced barcode scanning and Gemini AI, we provide real-time, personalized health scores and nutritional breakdowns tailored exactly to your unique goals.
+        </p>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="w-full max-w-3xl mx-auto mb-24 md:mb-32 text-center animate-fade-in-up scroll-mt-24">
+        <div className="bg-earth-olive/10 border border-earth-olive/20 rounded-3xl p-8 md:p-12 shadow-sm">
+          <h2 className="font-heading text-3xl font-bold text-earth-olive-dark mb-4">Get in Touch</h2>
+          <p className="text-earth-olive-dark/70 mb-8 max-w-xl mx-auto">
+            Have questions, feedback, or want to collaborate? I'd love to hear from you. Check out my portfolio to connect.
+          </p>
+          <a href="https://portfolio-sudarshan-dandgawal.vercel.app/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-8 py-3.5 bg-earth-olive text-earth-light font-bold rounded-xl hover:bg-earth-olive-light shadow-lg hover:shadow-xl transition-all hover:scale-105">
+            Connect With Me
+          </a>
+        </div>
+      </section>
     </div>
   );
 }
