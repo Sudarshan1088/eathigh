@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { getScanHistory } from "../api/user";
 import type { ScanHistoryEntry } from "@eathigh/shared";
 import { Calendar, PackageOpen } from "lucide-react";
+import SEO from "../components/SEO";
 
 export default function HistoryPage() {
   const { user } = useAuth();
@@ -33,6 +34,7 @@ export default function HistoryPage() {
 
   return (
     <div className="flex-1 flex flex-col w-full px-4 md:px-8 py-8 animate-fade-in-up pb-24 md:pb-8">
+      <SEO title="History | EatHigh" />
       <div className="w-full max-w-6xl mx-auto flex flex-col gap-8">
         <h1 className="font-heading text-3xl font-bold text-earth-olive-dark tracking-tight">Scan History</h1>
 

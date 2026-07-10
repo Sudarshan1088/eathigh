@@ -5,6 +5,7 @@ import { updateProfile } from "../api/user";
 import { DIETARY_PRESETS } from "@eathigh/shared";
 import type { DietaryGoal } from "@eathigh/shared";
 import { User, Mail, Activity, Ruler, ChevronDown, CheckCircle2, Save, LogOut } from "lucide-react";
+import SEO from "../components/SEO";
 
 export default function ProfilePage() {
   const { user, refreshUser, logout } = useAuth();
@@ -66,6 +67,7 @@ export default function ProfilePage() {
 
   return (
     <div className="flex-1 flex flex-col w-full px-4 md:px-8 py-8 animate-fade-in-up">
+      <SEO title="Profile | EatHigh" />
       <div className="w-full max-w-4xl mx-auto flex flex-col gap-8">
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

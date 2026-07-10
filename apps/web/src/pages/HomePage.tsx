@@ -6,6 +6,7 @@ import ProductCardSkeleton from "../components/ProductCardSkeleton";
 import { scanBarcode } from "../api/scan";
 import { useAuth } from "../context/AuthContext";
 import { Camera, ScanLine, Zap, CheckCircle2 } from "lucide-react";
+import SEO from "../components/SEO";
 
 export default function HomePage() {
   const { user } = useAuth();
@@ -38,6 +39,11 @@ export default function HomePage() {
 
   return (
     <div className="flex-1 flex flex-col w-full h-full px-4 md:px-8 pt-6 pb-8">
+      {result ? (
+        <SEO title="Scan Results | EatHigh" />
+      ) : (
+        <SEO title="EatHigh | Smart Food Scanner" />
+      )}
       {/* Hero Section */}
       <section className="text-center max-w-2xl mx-auto mb-10 md:mb-16">
         <h1 className="font-heading text-4xl md:text-5xl font-bold text-earth-olive-dark mb-4 leading-tight">
