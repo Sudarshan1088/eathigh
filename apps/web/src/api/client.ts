@@ -1,6 +1,6 @@
 import type { ApiResponse } from "@eathigh/shared";
 
-const BASE_URL = "/api";
+const BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
 let authToken: string | null =
   typeof window !== "undefined" ? localStorage.getItem("eathigh_token") : null;
