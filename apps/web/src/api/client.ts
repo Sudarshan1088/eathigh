@@ -2,14 +2,17 @@ import type { ApiResponse } from "@eathigh/shared";
 
 const BASE_URL = "/api";
 
-let authToken: string | null = localStorage.getItem("eathigh_token");
+let authToken: string | null =
+  typeof window !== "undefined" ? localStorage.getItem("eathigh_token") : null;
 
 export function setToken(token: string | null): void {
   authToken = token;
-  if (token) {
-    localStorage.setItem("eathigh_token", token);
-  } else {
-    localStorage.removeItem("eathigh_token");
+  if (typeof window !== "undefined") {
+    if (token) {
+      localStorage.setItem("eathigh_token", token);
+    } else {
+      localStorage.removeItem("eathigh_token");
+    }
   }
 }
 

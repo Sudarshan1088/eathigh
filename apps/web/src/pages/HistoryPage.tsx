@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { getScanHistory } from "../api/user";
 import type { ScanHistoryEntry } from "@eathigh/shared";
 import { Calendar, PackageOpen } from "lucide-react";
+import SEO from "../components/SEO";
 
 export default function HistoryPage() {
   const { user } = useAuth();
@@ -33,6 +34,7 @@ export default function HistoryPage() {
 
   return (
     <div className="flex-1 flex flex-col w-full px-4 md:px-8 py-8 animate-fade-in-up pb-24 md:pb-8">
+      <SEO title="History | EatHigh" />
       <div className="w-full max-w-6xl mx-auto flex flex-col gap-8">
         <h1 className="font-heading text-3xl font-bold text-earth-olive-dark tracking-tight">Scan History</h1>
 
@@ -43,7 +45,7 @@ export default function HistoryPage() {
           </div>
         ) : entries.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 gap-6 text-center bg-white/60 backdrop-blur-md border border-earth-olive-dark/20 rounded-3xl shadow-sm">
-            <PackageOpen className="w-16 h-16 text-earth-olive-dark/20" />
+            <PackageOpen className="w-16 h-16 text-accent-purple/40" />
             <p className="text-earth-olive-dark/70 text-lg max-w-sm">
               No scans yet. Start scanning products to build your nutritional history!
             </p>
@@ -85,7 +87,7 @@ export default function HistoryPage() {
                           className="max-h-full object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-sm"
                         />
                       ) : (
-                        <PackageOpen className="w-12 h-12 text-earth-olive-dark/20" />
+                        <PackageOpen className="w-12 h-12 text-accent-purple/40" />
                       )}
                     </div>
 
@@ -102,7 +104,7 @@ export default function HistoryPage() {
                       
                       {/* Footer */}
                       <div className="flex items-center justify-between pt-3 border-t border-earth-olive-dark/10">
-                        <div className="flex items-center gap-1.5 text-earth-olive-dark/50">
+                        <div className="flex items-center gap-1.5 text-accent-purple/70">
                           <Calendar className="w-3.5 h-3.5" />
                           <span className="text-xs font-semibold tracking-wide">
                             {new Date(entry.scannedAt).toLocaleDateString(undefined, { 

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://eathigh.vercel.app/sitemap.xml

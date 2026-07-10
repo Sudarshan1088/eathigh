@@ -5,6 +5,7 @@ import { updateProfile } from "../api/user";
 import { DIETARY_PRESETS } from "@eathigh/shared";
 import type { DietaryGoal } from "@eathigh/shared";
 import { User, Mail, Activity, Ruler, ChevronDown, CheckCircle2, Save, LogOut } from "lucide-react";
+import SEO from "../components/SEO";
 
 export default function ProfilePage() {
   const { user, refreshUser, logout } = useAuth();
@@ -66,6 +67,7 @@ export default function ProfilePage() {
 
   return (
     <div className="flex-1 flex flex-col w-full px-4 md:px-8 py-8 animate-fade-in-up">
+      <SEO title="Profile | EatHigh" />
       <div className="w-full max-w-4xl mx-auto flex flex-col gap-8">
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -100,7 +102,7 @@ export default function ProfilePage() {
               <label htmlFor="profile-name" className="text-sm font-bold text-earth-olive-dark/80 ml-1">Name</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <User className="w-4 h-4 text-earth-olive-dark/50" />
+                  <User className="w-4 h-4 text-accent-purple/70" />
                 </div>
                 <input
                   id="profile-name"
@@ -117,7 +119,7 @@ export default function ProfilePage() {
               <label className="text-sm font-bold text-earth-olive-dark/80 ml-1">Email</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Mail className="w-4 h-4 text-earth-olive-dark/50" />
+                  <Mail className="w-4 h-4 text-accent-purple/70" />
                 </div>
                 <div className="w-full pl-11 pr-4 py-3 bg-white/30 border border-earth-olive-dark/10 rounded-2xl text-earth-olive-dark/60 flex items-center h-[50px] shadow-inner cursor-not-allowed">
                   {user.email}
@@ -151,7 +153,7 @@ export default function ProfilePage() {
               <label htmlFor="profile-weight" className="text-sm font-bold text-earth-olive-dark/80 ml-1">Weight <span className="text-earth-olive-dark/50 font-normal">(kg)</span></label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Activity className="w-4 h-4 text-earth-olive-dark/50" />
+                  <Activity className="w-4 h-4 text-accent-purple/70" />
                 </div>
                 <input
                   id="profile-weight"
@@ -168,7 +170,7 @@ export default function ProfilePage() {
               <label htmlFor="profile-height" className="text-sm font-bold text-earth-olive-dark/80 ml-1">Height <span className="text-earth-olive-dark/50 font-normal">(cm)</span></label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                  <Ruler className="w-4 h-4 text-earth-olive-dark/50" />
+                  <Ruler className="w-4 h-4 text-accent-purple/70" />
                 </div>
                 <input
                   id="profile-height"
@@ -210,7 +212,7 @@ export default function ProfilePage() {
                   >
                     {active && (
                       <div className="absolute top-4 right-4 animate-scale-in">
-                        <CheckCircle2 className="w-5 h-5 text-earth-olive-dark" />
+                        <CheckCircle2 className="w-5 h-5 text-accent-purple" />
                       </div>
                     )}
                     <span className={`font-bold mb-2 text-earth-olive-dark`}>
